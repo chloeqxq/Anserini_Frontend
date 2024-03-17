@@ -21,6 +21,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+import io.anserini.search.ScoredDoc;
+import io.anserini.search.SimpleSearcher;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @PageTitle("Query Form")
 @Route(value = "query-form", layout = MainLayout.class)
 @Uses(Icon.class)
@@ -64,7 +69,26 @@ public class QueryForm extends Composite<VerticalLayout> {
         buttonPrimary.addClickListener((event -> {
             QueryParam queryParam = new QueryParam();
             try {
+                binder.writeBean(queryParam);
+                try {
+                    // index, k1, b, hits
+                    SimpleSearcher searcher = new SimpleSearcher(index.getValue());
+                    searcher.set_bm25(Float.parseFloat(k1.getValue()), Float.parseFloat(b.getValue()));
+                    ScoredDoc[] results = searcher.search("Earl W. Bubba Hiers", Integer.parseInt(hits.getValue()));
+                    for (ScoredDoc result : results) {
+                        System.out.println(result.docid);
+                        System.out.println(result.score);
+                        String jsonString = searcher.doc_raw(result.lucene_docid);
+                        ObjectMapper mapper = new ObjectMapper();
+                        JsonNode jsonNode = mapper.readTree(jsonString);
 
+                        System.out.println(jsonNode.get("contents"));                        
+                    }
+                    searcher.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
                 binder.writeBean(queryParam);
                 System.out.println(queryParam.toString());
             } catch (ValidationException e) {
