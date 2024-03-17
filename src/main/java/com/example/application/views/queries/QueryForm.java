@@ -64,7 +64,6 @@ public class QueryForm extends Composite<VerticalLayout> {
         buttonPrimary.addClickListener((event -> {
             QueryParam queryParam = new QueryParam();
             try {
-
                 binder.writeBean(queryParam);
                 System.out.println(queryParam.toString());
             } catch (ValidationException e) {
