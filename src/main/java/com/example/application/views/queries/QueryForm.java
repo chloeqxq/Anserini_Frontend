@@ -25,15 +25,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 @Route(value = "query-form", layout = MainLayout.class)
 @Uses(Icon.class)
 public class QueryForm extends Composite<VerticalLayout> {
-    private TextField index = new TextField("Index");
     private TextField topics = new TextField("Topics");
-    private TextField topicReader = new TextField("TopicReader");
-    private TextField output = new TextField("output");
-    private TextField format = new TextField("format");
-    private TextField parallelism = new TextField("parallelism");
-    private TextField k1 = new TextField("k1");
-    private TextField b = new TextField("b");
-    private TextField hits = new TextField("hits");
     private BeanValidationBinder<QueryParam> binder = new BeanValidationBinder<>(QueryParam.class);
     public QueryForm() {
         addClassName("query-form");
@@ -76,15 +68,7 @@ public class QueryForm extends Composite<VerticalLayout> {
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
         layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(index);
         formLayout2Col.add(topics);
-        formLayout2Col.add(topicReader);
-        formLayout2Col.add(output);
-        formLayout2Col.add(format);
-        formLayout2Col.add(parallelism);
-        formLayout2Col.add(k1);
-        formLayout2Col.add(b);
-        formLayout2Col.add(hits);
         layoutColumn2.add(layoutRow);
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
