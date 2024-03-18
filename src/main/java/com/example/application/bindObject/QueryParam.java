@@ -2,8 +2,7 @@ package com.example.application.bindObject;
 
 public class QueryParam {
     private String index;
-    private String topics;
-    private String topicReader;
+    private String query;
     private String output;
 
     public QueryParam() {
@@ -17,19 +16,11 @@ public class QueryParam {
     }
 
     // Topic:
-    public String getTopics() {
-        return topics;
+    public String getQuery() {
+        return query;
     }
-    public void setTopics(String topics) {
-        this.topics = topics;
-    }
-
-    public String getTopicReader() {
-        return topicReader;
-    }
-
-    public void setTopicReader(String topicReader) {
-        this.topicReader = topicReader;
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public String getOutput() {
@@ -43,7 +34,7 @@ public class QueryParam {
     @Override
     public String toString() {
         return "QueryParam{" +
-                ", topics='" + topics + '\'' +
+                ", query='" + query + '\'' +
                 '}';
     }
 }

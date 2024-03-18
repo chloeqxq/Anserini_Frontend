@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class SearchService {
     
-    final private String INDEX_DIR = "indexes/msmarco-passage/lucene-index-msmarco";
-    final private float k1 = 0.82f;
-    final private float b = 0.68f;
+    static final private String INDEX_DIR = "indexes/msmarco-passage/lucene-index-msmarco";
+    static final private float k1 = 0.82f;
+    static final private float b = 0.68f;
 
-    public List<String> search(String query, int hits) {
+    public static List<String> search(String query, int hits) {
         try {
             // index, k1, b, hits
             SimpleSearcher searcher = new SimpleSearcher(INDEX_DIR);

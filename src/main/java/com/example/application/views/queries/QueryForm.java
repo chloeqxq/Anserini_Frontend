@@ -3,6 +3,7 @@ package com.example.application.views.queries;
 import com.example.application.bindObject.QueryParam;
 import com.example.application.event.QueryFormSaveEvent;
 import com.example.application.eventlistener.QueryFormSaveEventListener;
+import com.example.application.services.SearchService;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -21,11 +22,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+import java.util.List;
+
 @PageTitle("Query Form")
 @Route(value = "query-form", layout = MainLayout.class)
 @Uses(Icon.class)
 public class QueryForm extends Composite<VerticalLayout> {
-    private TextField topics = new TextField("Topics");
+    private TextField query = new TextField("Query");
     private BeanValidationBinder<QueryParam> binder = new BeanValidationBinder<>(QueryParam.class);
     public QueryForm() {
         addClassName("query-form");
@@ -50,7 +53,7 @@ public class QueryForm extends Composite<VerticalLayout> {
         layoutRow.addClassName(LumoUtility.Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.getStyle().set("flex-grow", "1");
-        buttonPrimary.setText("Query");
+        buttonPrimary.setText("Search");
         buttonPrimary.setWidth("min-content");
         buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buttonPrimary.addClickListener((event -> {
@@ -58,6 +61,10 @@ public class QueryForm extends Composite<VerticalLayout> {
             try {
                 binder.writeBean(queryParam);
                 System.out.println(queryParam.toString());
+
+                List<String> searchResults = 
+                    SearchService.search(queryParam.getQuery(), 5);
+                System.out.println(searchResults);
             } catch (ValidationException e) {
                 throw new RuntimeException(e);
             }
@@ -68,7 +75,7 @@ public class QueryForm extends Composite<VerticalLayout> {
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
         layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(topics);
+        formLayout2Col.add(query);
         layoutColumn2.add(layoutRow);
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
