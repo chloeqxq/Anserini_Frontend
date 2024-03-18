@@ -1,6 +1,6 @@
 package com.example.application.event;
 
-import com.example.application.bindObject.QueryParam;
+import com.example.application.model.QueryParam;
 import com.example.application.views.queries.QueryForm;
 import com.vaadin.flow.component.ComponentEvent;
 

@@ -1,4 +1,4 @@
-package com.example.application.bindObject;
+package com.example.application.model;
 
 public class QueryParam {
     private String index;
