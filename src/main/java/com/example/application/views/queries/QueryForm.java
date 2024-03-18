@@ -10,14 +10,17 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -40,6 +43,7 @@ public class QueryForm extends Composite<VerticalLayout> {
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
         Button buttonSecondary = new Button();
+        Grid<String> resultsGrid = new Grid<>(String.class);
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.START);
@@ -65,6 +69,7 @@ public class QueryForm extends Composite<VerticalLayout> {
                 List<String> searchResults = 
                     SearchService.search(queryParam.getQuery(), 5);
                 System.out.println(searchResults);
+                resultsGrid.setItems(searchResults);
             } catch (ValidationException e) {
                 throw new RuntimeException(e);
             }
@@ -79,6 +84,14 @@ public class QueryForm extends Composite<VerticalLayout> {
         layoutColumn2.add(layoutRow);
         layoutRow.add(buttonPrimary);
         layoutRow.add(buttonSecondary);
+        resultsGrid.removeAllColumns();
+        resultsGrid.addColumn(new ComponentRenderer<>(item -> {
+            Div text = new Div();
+            text.setText(item.toString());
+            text.getStyle().set("white-space", "normal");
+            return text;
+        })).setHeader("Results");
+        getContent().add(resultsGrid);
         addListener(QueryFormSaveEvent.class, new QueryFormSaveEventListener());
     }
 
