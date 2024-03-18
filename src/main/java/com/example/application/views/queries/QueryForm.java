@@ -43,14 +43,14 @@ public class QueryForm extends Composite<VerticalLayout> {
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button buttonPrimary = new Button();
         Button buttonSecondary = new Button();
-        Grid<String> resultsGrid = new Grid<>(String.class);
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.START);
         getContent().setAlignItems(FlexComponent.Alignment.CENTER);
+        getContent().setFlexGrow(1, layoutColumn2);
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
-        layoutColumn2.setHeight("min-content");
+        layoutColumn2.setHeightFull();
         h3.setText("Query Document");
         h3.setWidth("100%");
         formLayout2Col.setWidth("100%");
@@ -60,6 +60,8 @@ public class QueryForm extends Composite<VerticalLayout> {
         buttonPrimary.setText("Search");
         buttonPrimary.setWidth("min-content");
         buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Grid<String> resultsGrid = new Grid<>(String.class);
+        resultsGrid.setAllRowsVisible(true);
         buttonPrimary.addClickListener((event -> {
             QueryParam queryParam = new QueryParam();
             try {
@@ -89,9 +91,10 @@ public class QueryForm extends Composite<VerticalLayout> {
             Div text = new Div();
             text.setText(item.toString());
             text.getStyle().set("white-space", "normal");
+            text.getStyle().set("padding", "var(--lumo-space-m)");
             return text;
-        })).setHeader("Results");
-        getContent().add(resultsGrid);
+        })).setHeader("Search Results");
+        layoutColumn2.add(resultsGrid);
         addListener(QueryFormSaveEvent.class, new QueryFormSaveEventListener());
     }
 
