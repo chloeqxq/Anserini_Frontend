@@ -25,7 +25,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import java.util.List;
 
 @PageTitle("Query Form")
-@Route(value = "query-form", layout = MainLayout.class)
+@Route(value = "", layout = MainLayout.class)
 @Uses(Icon.class)
 public class QueryForm extends Composite<VerticalLayout> {
     private TextField query = new TextField("Query");
@@ -47,7 +47,7 @@ public class QueryForm extends Composite<VerticalLayout> {
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
         layoutColumn2.setHeight("min-content");
-        h3.setText("Query document");
+        h3.setText("Query Document");
         h3.setWidth("100%");
         formLayout2Col.setWidth("100%");
         layoutRow.addClassName(LumoUtility.Gap.MEDIUM);
